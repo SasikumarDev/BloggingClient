@@ -1,0 +1,36 @@
+<div class="container-fluid">&nbsp;</div>
+<div class="container align-self-center" >
+  <mdb-card style="width: 50%;">
+    <mdb-card-body>
+      <mdb-card-title>
+        <h4 class="h4 mb-4">Login</h4>
+      </mdb-card-title>
+
+      <form class="text-center p-5" #Login="ngForm">
+        <div class="md-form">
+          <input type="email" name="email" id="txtem" [(ngModel)]="LoginUser.EmailId" autocomplete="off"
+            #EmailId="ngModel" class="form-control mb-4" required email>
+          <label for="txtem">Email</label>
+          <mdb-error *ngIf="EmailId.invalid && (EmailId.dirty || EmailId.touched)">
+            <span *ngIf="EmailId.errors.required">Email is required</span>
+            <span *ngIf="EmailId.errors.email">This email address is not valid</span>
+          </mdb-error>
+        </div>
+        <div class="md-form">
+          <input type="password" name="Password" id="txtpas" [(ngModel)]="LoginUser.Password" minlength="8"
+            #Password="ngModel" class="form-control" required>
+          <label for="txtpas">Password</label>
+          <mdb-error *ngIf="Password.invalid && (Password.dirty || Password.touched)">
+            <span *ngIf="Password.errors.required">Password is required</span>
+            <span *ngIf="Password.errors.minlength">Password Should have minlength of 8</span>
+          </mdb-error>
+        </div>
+        <p class="text-danger" *ngIf="ErrorMessage !== ''">
+            {{ErrorMessage}}
+        </p>
+        <button mdbBtn color="info" block="true" type="button" class="my-4"  (click)="LoginTest();" [disabled]="Login.invalid" >LogIn</button>
+        <a class="nav-link waves-light" routerLink="/Register" mdbWavesEffect >Register Here</a>
+      </form>
+    </mdb-card-body>
+  </mdb-card>
+</div>

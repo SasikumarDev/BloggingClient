@@ -1,0 +1,75 @@
+<div class="container-fluid">&nbsp;</div>
+<div class="container">
+  <mdb-card style="background-image: url('https://mdbootstrap.com/img/Photos/Others/gradient1.jpg')">
+    <div class="text-white text-center py-5 px-4 my-5">
+      <div>
+        <h2 class="card-title h1-responsive pt-3 mb-5 font-bold"><strong>Ask Questions.</strong></h2>
+        <p class="mx-5 mb-5">
+          Get Help From Dev.
+        </p>
+        <a mdbBtn color="white" outline="true" routerLink="/Issue" class="waves-light" mdbWavesEffect>
+          <mdb-icon fas icon="clone" class="left"></mdb-icon>Ask Questions
+        </a>
+      </div>
+    </div>
+  </mdb-card>
+</div>
+<div class="container-fluid">&nbsp;</div>
+<div class="container">
+  <div class="spinner-border text-info" role="status" *ngIf="IsLoading">
+    <span class="sr-only">Loading...</span>
+  </div>
+  <div class="alert alert-danger" role="alert" *ngIf="IsServerError">
+    <h4 class="alert-heading">OOPS!</h4>
+    <p>Something Went wrong.Due to http Errors</p>
+    <hr>
+    <p class="mb-0">We Will Notify when server is Available</p>
+  </div>
+  <div class="list-group" *ngIf="IsServerError === false">
+    <a (click)="ViewSingleissue(item);" class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let item of Data">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1"></h5>
+        <small>{{GenDate(item.askedOn)}}</small>
+      </div>
+      <div class="mb-1" innerHtml="{{item.question}}">
+      </div>
+      <small (mouseover)="MouseEvnt($event, item)" [mdbPopover]="hoverImgTemp" mdbWavesEffect triggers="hover">Asked By
+        : {{item.askedby}}</small>
+      <br>
+      <small>
+        <mdb-badge primary="true" *ngFor="let Tags of item.tags">{{Tags}} &nbsp;</mdb-badge>
+      </small>
+    </a>
+  </div>
+  <ng-template #hoverImgTemp>
+    <div>
+      <div class="spinner-border text-info" role="status" *ngIf="IsChildEL">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <mdb-card *ngIf="IsChildEL === false && Puser">
+        <div class="view rgba-white-slight waves-light" mdbWavesEffect>
+          <!-- Card img -->
+          <mdb-card-img src="{{Puser.profile}}" class="img-fluid z-depth-1 rounded-circle" alt="Card image cap">
+          </mdb-card-img>
+          <a>
+            <div class="mask"></div>
+          </a>
+        </div>
+        <!--Card content-->
+        <mdb-card-body>
+          <!--Title-->
+          <mdb-card-title>
+            <h4>{{Puser.fullname}}</h4>
+          </mdb-card-title>
+
+          <!--Text-->
+          <mdb-card-text>
+            <p class="text-primary">Contact : {{Puser.contact}}</p>
+            <p class="text-primary">Questions : {{Puser.questions}}</p>
+            <p class="text-primary">Answers : {{Puser.answers}}</p>
+          </mdb-card-text>
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+  </ng-template>
+</div>

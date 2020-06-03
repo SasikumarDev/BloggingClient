@@ -1,0 +1,48 @@
+<!--Navbar-->
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark purple lighten-1"  [containerInside]="false">
+
+  <!-- Navbar brand -->
+  <mdb-navbar-brand><a class="navbar-brand" href="#" >
+    <img src="../assets/Logo.png" class="nvbrnd" height="30" alt="">
+    {{NavTitle}}</a></mdb-navbar-brand>
+
+  <!-- Collapsible content -->
+  <links>
+
+    <!-- Links -->
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item " routerLinkActive="active">
+        <a class="nav-link waves-light" routerLink="/Home" mdbWavesEffect>Home</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active" *ngIf="IsAutheticated">
+        <a class="nav-link waves-light" routerLink="/Dashboard" mdbWavesEffect>Dashboard</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto" *ngIf="IsAutheticated && LogedUserDt">
+      <li class="nav-item dropdown" dropdown>
+        <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+          <mdb-icon fas icon="bell"></mdb-icon>
+        </a> 
+        <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
+          <a class="dropdown-item waves-light" mdbWavesEffect href="#">Notification</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown" dropdown>
+        <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+          <!-- <img src="{{LogedUserDt.pic}}" style="height: 15%;width: 25%;" alt="" class="img-fluid rounded-circle z-depth-0">  -->
+            {{LogedUserDt.email}}</a> 
+        <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
+          <a class="dropdown-item waves-light" mdbWavesEffect href="#">My account</a>
+          <a class="dropdown-item waves-light" mdbWavesEffect (click)="LogOut()" >Log out</a>
+        </div>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto" *ngIf="IsAutheticated === false">
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link waves-light" routerLink="/Logins" mdbWavesEffect><mdb-icon fas icon="user"></mdb-icon> Login</a>
+      </li>
+    </ul>
+  </links>
+</mdb-navbar>
+<router-outlet></router-outlet>
+<div class="container-fluid">&nbsp;</div>
