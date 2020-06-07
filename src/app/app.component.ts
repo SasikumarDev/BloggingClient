@@ -1,7 +1,7 @@
 import { SignalRNotificationServiceService } from './Shared/Notification/signal-rnotification-service.service';
 import { Router } from '@angular/router';
 import { BloggerService } from './Shared/blogger.service';
-import { Component, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, NgZone } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -13,9 +13,13 @@ export class AppComponent {
   IsAutheticated = false;
   LogedUserDt: any;
   IsAuth: EventEmitter<boolean> = new EventEmitter();
-  constructor(private Ser: BloggerService, private Route: Router, private Notification: SignalRNotificationServiceService) {
+  NotiFications: any[] = [];
+  NoofNoyi;
+  constructor(private Ser: BloggerService, private Route: Router, private Notification: SignalRNotificationServiceService,
+    private Zone: NgZone) {
     this.CheckIsAuth();
-   }
+    this.ReceivedNotifivation();
+  }
   CheckIsAuth() {
     const token = window.localStorage.getItem('BlogGTKn');
     if (token !== null) {
@@ -38,5 +42,18 @@ export class AppComponent {
     this.IsAutheticated = false;
     this.IsAuth.emit(this.IsAutheticated);
     this.LogedUserDt = null;
+  }
+  private ReceivedNotifivation(): void {
+    this.Notification.messageReceived.subscribe((x: any) => {
+      this.Zone.run(() => {
+        this.NotiFications.push(x);
+        this.NoofNoyi = this.NotiFications.length;
+      });
+    }, err => {
+      console.log(err);
+    });
+  }
+  setcountzero() {
+    this.NoofNoyi = 0;
   }
 }

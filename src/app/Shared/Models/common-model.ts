@@ -7,6 +7,7 @@ export class Questions {
     public AskedBy: number;
     public AskedOn: Date;
     public Tags: string;
+    public TagsAr: Array<string>;
 }
 
 export class DParameter {

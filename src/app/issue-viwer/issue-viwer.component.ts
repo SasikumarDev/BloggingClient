@@ -11,11 +11,23 @@ import { Router } from '@angular/router';
 })
 export class IssueViwerComponent implements OnInit {
   Qst: Questions = new Questions();
-  constructor(private Ser: BloggerService, private router: Router) { }
+  Tags: any[];
+  constructor(private Ser: BloggerService, private router: Router) {
+    this.GetTags();
+   }
+
+  GetTags() {
+    this.Ser.GetLanTags().subscribe((x: any[] ) => {
+      this.Tags = x;
+      console.log(x);
+    }, err => {
+      console.log(err);
+    });
+  }
 
   SubmitQst() {
+    this.Qst.Tags = this.Qst.TagsAr.toString();
     this.Ser.SubmitQst(this.Qst).subscribe((x: any[]) => {
-      console.log(x);
       this.router.navigateByUrl('/Home');
     });
   }

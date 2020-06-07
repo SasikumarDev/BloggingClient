@@ -78,4 +78,7 @@ export class BloggerService {
     DpParam.Id = data;
     return this.Http.post(this.AccountURL + 'CheckUserAvailable', DpParam);
   }
+  GetLanTags() {
+    return this.Http.get(this.BaseURL + 'GetTags');
+  }
 }

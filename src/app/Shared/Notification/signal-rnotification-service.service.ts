@@ -13,9 +13,12 @@ export class SignalRNotificationServiceService {
   private _hubConnection: HubConnection;
 
   constructor() {
-    this.createConnection();
-    this.registerOnServerEvents();
-    this.startConnection();
+    const token = window.localStorage.getItem('BlogGTKn');
+    if (token !== null) {
+      this.createConnection();
+      this.registerOnServerEvents();
+      this.startConnection();
+    }
   }
 
   // sendMessage(message: Message) {
@@ -47,8 +50,8 @@ export class SignalRNotificationServiceService {
 
   private registerOnServerEvents(): void {
     this._hubConnection.on('MessageReceived', (data: any) => {
-      // this.messageReceived.emit(data);
-      console.log(data);
+      console.log('Data received........');
+      this.messageReceived.emit(data);
     });
   }
 }

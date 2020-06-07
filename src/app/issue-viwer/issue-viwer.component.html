@@ -1,5 +1,20 @@
 <div class="container-fluid">&nbsp;</div>
 <div class="container">
-    <angular-editor [placeholder]="'Enter text here...'" [(ngModel)]="Qst.Question" ></angular-editor>
-    <button mdbBtn type="button" color="primary" (click)="SubmitQst();" mdbWavesEffect>Post</button>
+  <form #question="ngForm">
+    <div class="form-group col-md-3">
+      <label>Tags</label>
+      <select class="form-control" [(ngModel)]="Qst.TagsAr" name="tags" #tags="ngModel" multiple required>
+        <option *ngFor="let Tag of Tags" value="{{Tag.tgId}}">
+          {{Tag.tagname}}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Question</label>
+      <angular-editor [placeholder]="'Enter text here...'" name="quetion" [(ngModel)]="Qst.Question" #Qstion="ngModel"
+        required></angular-editor>
+    </div>
+    <button mdbBtn type="button" color="primary" (click)="SubmitQst();" [disabled]="question.invalid"
+      mdbWavesEffect>Post</button>
+  </form>
 </div>

@@ -1,10 +1,10 @@
 <!--Navbar-->
-<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark purple lighten-1"  [containerInside]="false">
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark purple lighten-1" [containerInside]="false">
 
   <!-- Navbar brand -->
-  <mdb-navbar-brand><a class="navbar-brand" href="#" >
-    <img src="../assets/Logo.png" class="nvbrnd" height="30" alt="">
-    {{NavTitle}}</a></mdb-navbar-brand>
+  <mdb-navbar-brand><a class="navbar-brand" href="#">
+      <img src="../assets/Logo.png" class="nvbrnd" height="30" alt="">
+      {{NavTitle}}</a></mdb-navbar-brand>
 
   <!-- Collapsible content -->
   <links>
@@ -20,26 +20,34 @@
     </ul>
     <ul class="navbar-nav ml-auto" *ngIf="IsAutheticated && LogedUserDt">
       <li class="nav-item dropdown" dropdown>
-        <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
-          <mdb-icon fas icon="bell"></mdb-icon>
-        </a> 
+        <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect (click)="setcountzero()">
+          <mdb-icon fas icon="bell">
+          </mdb-icon>
+          <mdb-badge pill="true" default="true" *ngIf="NoofNoyi > 0">{{NoofNoyi}}
+          </mdb-badge>
+        </a>
         <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
-          <a class="dropdown-item waves-light" mdbWavesEffect href="#">Notification</a>
+          <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="[Notification.navigation]"
+            *ngFor="let Notification of NotiFications">
+            {{Notification.body}}
+          </a>
         </div>
       </li>
       <li class="nav-item dropdown" dropdown>
         <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
           <!-- <img src="{{LogedUserDt.pic}}" style="height: 15%;width: 25%;" alt="" class="img-fluid rounded-circle z-depth-0">  -->
-            {{LogedUserDt.email}}</a> 
+          {{LogedUserDt.email}}</a>
         <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
           <a class="dropdown-item waves-light" mdbWavesEffect href="#">My account</a>
-          <a class="dropdown-item waves-light" mdbWavesEffect (click)="LogOut()" >Log out</a>
+          <a class="dropdown-item waves-light" mdbWavesEffect (click)="LogOut()">Log out</a>
         </div>
       </li>
     </ul>
     <ul class="navbar-nav ml-auto" *ngIf="IsAutheticated === false">
       <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link waves-light" routerLink="/Logins" mdbWavesEffect><mdb-icon fas icon="user"></mdb-icon> Login</a>
+        <a class="nav-link waves-light" routerLink="/Logins" mdbWavesEffect>
+          <mdb-icon fas icon="user"></mdb-icon> Login
+        </a>
       </li>
     </ul>
   </links>
