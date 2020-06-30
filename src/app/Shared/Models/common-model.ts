@@ -7,6 +7,7 @@ export class Questions {
     public AskedBy: number;
     public AskedOn: Date;
     public Tags: string;
+    public Title: string;
     public TagsAr: Array<string>;
 }
 
@@ -41,5 +42,10 @@ export class Message {
     public  To: string;
     public  Dtime: Date;
     public  Navigation: string;
+}
+
+export class Filters {
+    public Tags: string;
+    public Type: number;
 }
 

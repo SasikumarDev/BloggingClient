@@ -5,6 +5,8 @@ import { BloggerService } from './../Shared/blogger.service';
 import { Component, OnInit, NgZone } from '@angular/core';
 import { DParameter } from '../Shared/Models/common-model';
 import { DatePipe } from '@angular/common';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-view-part-issue',
@@ -23,22 +25,27 @@ export class ViewPartIssueComponent implements OnInit {
   IsChildEL = false;
   UserAns: Answer = new Answer();
   RouteID;
+  AudioPlayer;
+  Contibutor: any[] = [];
+  SimilarQst: any[] = [];
   constructor(private Ser: BloggerService, private Route: Router,
               public AppCom: AppComponent, private ActRoute: ActivatedRoute, private Datef: DatePipe, private Zone: NgZone) {
-    this.RouteID = this.ActRoute.snapshot.paramMap.get('id');
-    this.Param.Id = this.RouteID.toString();
-    this.IsLoading = true;
-    this.CheckIsAuth();
-    this.GetQuestionAndAns();
+    this.ActRoute.params.subscribe(x => {
+      this.RouteID = x.id;
+      this.IsLoading = true;
+      this.CheckIsAuth();
+      this.GetQuestionAndAns();
+    });
   }
   GetQuestionAndAns() {
     this.Param = new DParameter();
-    this.Param.Id = this.RouteID.toString();
+    this.Param.Id = this.RouteID;
     this.Ser.GetPartGetQuestionAndAns(this.Param).subscribe((x: any) => {
       if (x.message === '') {
         this.Question = x.question;
         this.Answers = x.answers;
-       // console.log(this.Answers);
+        this.Contibutor = x.contrib;
+        this.SimilarQst = x.similar;
       } else {
         this.ErrorMessage = x.message;
       }
@@ -94,7 +101,12 @@ export class ViewPartIssueComponent implements OnInit {
   SubmitLike(data) {
     this.Param = new DParameter();
     this.Param.Id = data.toString();
+    this.AudioPlayer = null;
     this.Ser.LikeAndUnlike(this.Param).subscribe((x: any) => {
+      this.AudioPlayer = new Audio();
+      this.AudioPlayer.src = '../assets/Like.wav';
+      this.AudioPlayer.load();
+      this.AudioPlayer.play();
       if (x.message !== '') {
         this.GetQuestionAndAns();
       }
@@ -115,6 +127,10 @@ export class ViewPartIssueComponent implements OnInit {
         this.GetQuestionAndAns();
       });
     });
+  }
+  ViewSingleissue(issue: any) {
+    const id = issue.qstId;
+    this.Route.navigate(['/PartIss', id]);
   }
   ngOnInit() {
   }

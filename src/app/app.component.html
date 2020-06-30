@@ -1,5 +1,14 @@
+<div *ngIf="IsPageLoading" style="width:100%;">
+  <p class="text-dark">{{LoadingText}}</p>
+  <div class="d-flex justify-content-center">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+</div>
 <!--Navbar-->
-<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark purple lighten-1" [containerInside]="false">
+<mdb-navbar *ngIf="IsPageLoading === false" SideClass="navbar navbar-expand-lg navbar-dark purple lighten-1"
+  [containerInside]="false">
 
   <!-- Navbar brand -->
   <mdb-navbar-brand><a class="navbar-brand" href="#">
@@ -20,17 +29,35 @@
     </ul>
     <ul class="navbar-nav ml-auto" *ngIf="IsAutheticated && LogedUserDt">
       <li class="nav-item dropdown" dropdown>
-        <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect (click)="setcountzero()">
+        <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect
+          (click)="setcountzero()">
           <mdb-icon fas icon="bell">
           </mdb-icon>
           <mdb-badge pill="true" default="true" *ngIf="NoofNoyi > 0">{{NoofNoyi}}
           </mdb-badge>
         </a>
         <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
-          <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="[Notification.navigation]"
-            *ngFor="let Notification of NotiFications">
-            {{Notification.body}}
-          </a>
+          <div class="list-group">
+            <a [routerLink]="[Notification.nav]"
+              class="list-group-item list-group-item-action dropdown-item waves-light border-0"
+              *ngFor="let Notification of NotiFications">
+              <div class="d-flex justify-content-between">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="col-md-3">
+                      <img src="{{Notification.prof}}" class="img-fluid rounded-circle" />
+                    </div>
+                    <div class="col-md-6">
+                      <small>{{Notification.body}}</small>
+                    </div>
+                    <div class="col-md-3">
+                      <small>{{GenDate(Notification.datetime)}}</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
         </div>
       </li>
       <li class="nav-item dropdown" dropdown>

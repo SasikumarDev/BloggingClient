@@ -1,0 +1,33 @@
+<div class="container-fluid">&nbsp;</div>
+<div class="form-control" id="divautocomple" style="height: auto;width:50%;" mdbDropdown (click)="FocusControl()">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <mdb-badge primary="true" class="mr-1" style="font-size: small;" *ngFor="let item of OutPutData">{{item.name}} &nbsp;</mdb-badge>
+      </div>
+    </div>
+  </div>
+  <input type="text" id="txtautocompelte" mdbDropdownToggle [(ngModel)]="TextBoxEditor" #editor="ngModel"
+    (keyup)="GetData($event)" classInside="dropdown-toggle" class="inputauto" style="width: 90%;" autocomplete="off">
+    <!-- <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search..." />
+    <datalist id="datalistOptions">
+      <option value="San Francisco"> </option>
+      <option value="New York"> </option>
+      <option value="Seattle"> </option>
+      <option value="Los Angeles"> </option>
+      <option value="Chicago"> </option>
+    </datalist> -->
+  <div class="dropdown-menu dropdown-primary">
+    <a class="dropdown-item" *ngIf="IsLoading && ShowNoRec === false">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </a>
+    <ng-container *ngIf="ShowNoRec">
+      <a class="dropdown-item"> {{EmptyResult}} </a>
+    </ng-container>
+    <ng-container *ngIf="IsLoading === false">
+      <a class="dropdown-item" *ngFor="let Data of DataSource" (click)="Saveclicked(Data)"> {{Data.name}} </a>
+    </ng-container>
+  </div>
+</div>

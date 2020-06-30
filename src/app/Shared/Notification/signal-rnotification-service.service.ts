@@ -25,7 +25,7 @@ export class SignalRNotificationServiceService {
   //   this._hubConnection.invoke('NewMessage', message);
   // }
 
-  private createConnection() {
+  public createConnection() {
     this._hubConnection = new HubConnectionBuilder()
       .withUrl('https://localhost:5001' + '/Notification', {
         accessTokenFactory: () => window.localStorage.getItem('BlogGTKn')
@@ -33,7 +33,7 @@ export class SignalRNotificationServiceService {
       .build();
   }
 
-  private startConnection(): void {
+  public startConnection(): void {
     this._hubConnection
       .start()
       .then(() => {
@@ -48,7 +48,7 @@ export class SignalRNotificationServiceService {
       });
   }
 
-  private registerOnServerEvents(): void {
+  public registerOnServerEvents(): void {
     this._hubConnection.on('MessageReceived', (data: any) => {
       console.log('Data received........');
       this.messageReceived.emit(data);

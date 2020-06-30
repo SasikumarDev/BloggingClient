@@ -13,7 +13,13 @@ export class BloggerService {
     Authorization: 'Bearer ' + window.localStorage.getItem('BlogGTKn')
   });
   constructor(private Http: HttpClient) { }
-
+  GetNotification() {
+    this.reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + window.localStorage.getItem('BlogGTKn')
+    });
+    return this.Http.get(this.BaseURL + 'GetNotification', { headers: this.reqHeader });
+  }
   SubmitQst(Data: Questions) {
     this.reqHeader = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -80,5 +86,10 @@ export class BloggerService {
   }
   GetLanTags() {
     return this.Http.get(this.BaseURL + 'GetTags');
+  }
+  SearchTags(data: string) {
+    const DpParam: DParameter = new DParameter();
+    DpParam.Name = data;
+    return this.Http.post(this.BaseURL + 'SearchTags', DpParam); // , {reportProgress: true}
   }
 }

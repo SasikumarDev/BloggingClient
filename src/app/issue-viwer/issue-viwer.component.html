@@ -1,20 +1,21 @@
 <div class="container-fluid">&nbsp;</div>
 <div class="container">
   <form #question="ngForm">
-    <div class="form-group col-md-3">
+    <div class="form-group">
       <label>Tags</label>
-      <select class="form-control" [(ngModel)]="Qst.TagsAr" name="tags" #tags="ngModel" multiple required>
-        <option *ngFor="let Tag of Tags" value="{{Tag.tgId}}">
-          {{Tag.tagname}}
-        </option>
-      </select>
+      <app-auto-complete-mutli-select (ResultData)="GetOutput($event)" >
+      </app-auto-complete-mutli-select>
+    </div>
+    <div class="form-group">
+      <label>Title</label>
+      <input type="text" [(ngModel)]="Qst.Title" #title="ngModel" name="title" class="form-control" placeholder="Title" required>
     </div>
     <div class="form-group">
       <label>Question</label>
-      <angular-editor [placeholder]="'Enter text here...'" name="quetion" [(ngModel)]="Qst.Question" #Qstion="ngModel"
+      <angular-editor [placeholder]="'Enter text here...'" [config]="editorConfig" name="quetion" [(ngModel)]="Qst.Question" #Qstion="ngModel"
         required></angular-editor>
     </div>
-    <button mdbBtn type="button" color="primary" (click)="SubmitQst();" [disabled]="question.invalid"
+    <button mdbBtn type="button" color="primary" (click)="SubmitQst();" [disabled]="question.invalid || Qst.TagsAr?.length === 0"
       mdbWavesEffect>Post</button>
   </form>
 </div>

@@ -37,10 +37,11 @@
         : {{item.askedby}}</small>
       <br>
       <small>
-        <mdb-badge primary="true" *ngFor="let Tags of item.tags">{{Tags}} &nbsp;</mdb-badge>
+        <mdb-badge primary="true" class="mr-1" style="font-size: small;" *ngFor="let Tags of item.tags">{{Tags}} &nbsp;</mdb-badge>
       </small>
     </a>
   </div>
+  <a routerLink="/ViewAll" *ngIf="IsServerError === false" mdbBtn type="button" color="primary" mdbWavesEffect style="float: right;">>>>></a>
   <ng-template #hoverImgTemp>
     <div>
       <div class="spinner-border text-info" role="status" *ngIf="IsChildEL">

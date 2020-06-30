@@ -1,0 +1,9 @@
+.disableoption {
+    pointer-events: none;
+}
+.inputauto {
+    border:none;
+}
+.inputauto:focus {
+    border: none;
+}

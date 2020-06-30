@@ -1,6 +1,7 @@
+import { AppComponent } from './../app.component';
 import { Router } from '@angular/router';
 import { BloggerService } from './../Shared/blogger.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { DParameter } from './../Shared/Models/common-model';
 import { DatePipe } from '@angular/common';
 
@@ -17,9 +18,11 @@ export class HomeComponent implements OnInit {
   IsChildEL = false;
   Cparam: DParameter = new DParameter();
   Puser: any;
-  constructor(private Ser: BloggerService, private Datef: DatePipe, private Route: Router) {
+  constructor(private Ser: BloggerService, private Datef: DatePipe, private Route: Router,
+              private Zone: NgZone, private App: AppComponent) {
     this.IsLoading = true;
     this.FillData();
+    this.CheckIsauth();
   }
   FillData() {
     this.Ser.getLatestQst().subscribe((x: any[]) => {
@@ -55,6 +58,14 @@ export class HomeComponent implements OnInit {
   ViewSingleissue(data: any) {
     const id = data.qstId;
     this.Route.navigate(['/PartIss', id]);
+  }
+  CheckIsauth(): void {
+    this.App.IsAuth.subscribe((x: boolean) => {
+      this.Zone.run(() => {
+        this.IsLoading = true;
+        this.FillData();
+      });
+    });
   }
   ngOnInit() {
   }

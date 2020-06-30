@@ -1,0 +1,12 @@
+.avatar-image {
+border-radius: 100%;
+}
+.btnlike {
+    border: none;
+    outline: none;
+    transition: 1000ms;
+}
+.btnlike:hover {
+    transform: scale(1.1);
+    background-color: paleturquoise;
+}

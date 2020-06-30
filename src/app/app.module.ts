@@ -1,3 +1,4 @@
+import { AutoCompleteMutliSelectComponent } from './Shared/Components/auto-complete-mutli-select/auto-complete-mutli-select.component';
 import { BloggerService } from './Shared/blogger.service';
 import { BloggingGuardGuard } from './Shared/Guard/blogging-guard.guard';
 import { BrowserModule } from '@angular/platform-browser';
@@ -17,6 +18,7 @@ import { LoginsComponent } from './logins/logins.component';
 import { RegisterComponent } from './register/register.component';
 import { ViewPartIssueComponent } from './view-part-issue/view-part-issue.component';
 import { RegisterEmailValidatorDirective } from './Shared/Validators/register-email-validator.directive';
+import { FilterQuestionsComponent } from './filter-questions/filter-questions.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { RegisterEmailValidatorDirective } from './Shared/Validators/register-em
     LoginsComponent,
     RegisterComponent,
     ViewPartIssueComponent,
-    RegisterEmailValidatorDirective
+    RegisterEmailValidatorDirective,
+    AutoCompleteMutliSelectComponent,
+    FilterQuestionsComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +49,7 @@ import { RegisterEmailValidatorDirective } from './Shared/Validators/register-em
       { path: 'PartIss/:id', component: ViewPartIssueComponent },
       { path: 'Logins', component: LoginsComponent },
       { path: 'Register', component: RegisterComponent },
+      { path: 'ViewAll', component: FilterQuestionsComponent },
       { path: '**', component: HomeComponent }
     ])
   ],
