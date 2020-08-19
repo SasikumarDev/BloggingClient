@@ -1,11 +1,15 @@
-<div *ngIf="IsPageLoading" style="width:100%;">
+<!-- <div *ngIf="IsPageLoading" style="width:100%;">
   <p class="text-dark">{{LoadingText}}</p>
   <div class="d-flex justify-content-center">
     <div class="spinner-border" role="status">
       <span class="sr-only">Loading...</span>
     </div>
   </div>
-</div>
+</div> -->
+<ngx-spinner bdColor="rgba(13,13,13,0.8)" size="large" color="#81b845" type="timer" [fullScreen]="true">
+  <br />
+  <p style="color: white"> {{LoadingText}} </p>
+</ngx-spinner>
 <!--Navbar-->
 <mdb-navbar *ngIf="IsPageLoading === false" SideClass="navbar navbar-expand-lg navbar-dark purple lighten-1"
   [containerInside]="false">
@@ -45,7 +49,7 @@
                 <div class="row">
                   <div class="col-md-12">
                     <div class="col-md-3">
-                      <img src="{{Notification.prof}}" class="img-fluid rounded-circle" />
+                      <img src="{{Notification.prof}}" style="height: 20px;width: 20px;border-radius: 50%;flex-shrink: 0;object-fit: cover;" />
                     </div>
                     <div class="col-md-6">
                       <small>{{Notification.body}}</small>
@@ -62,8 +66,10 @@
       </li>
       <li class="nav-item dropdown" dropdown>
         <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
-          <!-- <img src="{{LogedUserDt.pic}}" style="height: 15%;width: 25%;" alt="" class="img-fluid rounded-circle z-depth-0">  -->
-          {{LogedUserDt.email}}</a>
+          <img src="{{LogedUserDt.pic}}"
+            style="height: 20px;width: 20px;border-radius: 50%;flex-shrink: 0;object-fit: cover;" alt="">
+          <!-- {{LogedUserDt.email}} -->
+        </a>
         <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
           <a class="dropdown-item waves-light" mdbWavesEffect href="#">My account</a>
           <a class="dropdown-item waves-light" mdbWavesEffect (click)="LogOut()">Log out</a>
@@ -81,3 +87,7 @@
 </mdb-navbar>
 <router-outlet></router-outlet>
 <div class="container-fluid">&nbsp;</div>
+
+<!-- .mat-card-avatar {
+  height: 40px;width: 40px;border-radius: 50%;flex-shrink: 0;object-fit: cover;
+} -->

@@ -25,7 +25,7 @@ export class BloggerService {
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + window.localStorage.getItem('BlogGTKn')
     });
-    return this.Http.post(this.BaseURL + 'AddQst', Data, { headers: this.reqHeader });
+    return this.Http.post(this.BaseURL + 'AddQst', Data, { headers: this.reqHeader, reportProgress: true, observe: 'events'});
   }
 
   getLatestQst() {
@@ -77,7 +77,7 @@ export class BloggerService {
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + window.localStorage.getItem('BlogGTKn')
     });
-    return this.Http.post(this.BaseURL + 'LikeAns', data, { headers: this.reqHeader });
+    return this.Http.post(this.BaseURL + 'LikeAns', data, { headers: this.reqHeader});
   }
   CheckEmilIDonRegister(data: string) {
     const DpParam: DParameter = new DParameter();

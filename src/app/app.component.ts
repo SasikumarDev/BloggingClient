@@ -1,8 +1,10 @@
+import { LocalStorageServiceService } from './Shared/Service/local-storage-service.service';
 import { SignalRNotificationServiceService } from './Shared/Notification/signal-rnotification-service.service';
 import { Router } from '@angular/router';
 import { BloggerService } from './Shared/blogger.service';
 import { Component, EventEmitter, NgZone } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-root',
@@ -20,12 +22,15 @@ export class AppComponent {
   IsPageLoading = false;
   LoadingText;
   constructor(private Ser: BloggerService, private Route: Router, private Notification: SignalRNotificationServiceService,
-              private Zone: NgZone, private Datef: DatePipe) {
+              private Zone: NgZone, private Datef: DatePipe, private Storage: LocalStorageServiceService,
+              private spinner: NgxSpinnerService) {
     this.CheckIsAuth();
     this.ReceivedNotifivation();
+    this.DetectChanges();
   }
   CheckIsAuth() {
     this.IsPageLoading = true;
+    this.spinner.show();
     this.LoadingText = 'Checking User Authentication';
     const token = window.localStorage.getItem('BlogGTKn');
     if (token !== null) {
@@ -36,22 +41,26 @@ export class AppComponent {
         this.getnotification();
         this.LoadingText = 'Authentication Completed...';
         this.IsPageLoading = false;
+        this.spinner.hide();
       }, err => {
         console.log(err);
         this.IsAutheticated = false;
         this.IsAuth.emit(this.IsAutheticated);
         this.LoadingText = 'Authentication Failed...';
         this.IsPageLoading = false;
+        this.spinner.hide();
       });
     } else {
       this.IsAutheticated = false;
       this.IsAuth.emit(this.IsAutheticated);
       this.LoadingText = 'Authentication Failed...';
       this.IsPageLoading = false;
+      this.spinner.hide();
     }
   }
   LogOut() {
     window.localStorage.removeItem('BlogGTKn');
+    this.Notification.StopConnection();
     this.IsAutheticated = false;
     this.IsAuth.emit(this.IsAutheticated);
     this.LogedUserDt = null;
@@ -83,5 +92,12 @@ export class AppComponent {
     const todate = new Date();
     const dydate = new Date(data);
     return this.Datef.transform(dydate, 'dd-MMM-yyyy hh:mm a');
+  }
+  DetectChanges() {
+    this.Storage.EmmitKey.subscribe((x: string) => {
+      if (x === 'BlogGTKn') {
+        this.CheckIsAuth();
+      }
+    });
   }
 }

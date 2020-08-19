@@ -44,7 +44,7 @@ export class SignalRNotificationServiceService {
       })
       .catch(err => {
         console.log('Error while establishing connection, retrying...');
-        setTimeout(function () { this.startConnection(); }, 5000);
+        setTimeout(function() { this.startConnection(); }, 5000);
       });
   }
 
@@ -52,6 +52,17 @@ export class SignalRNotificationServiceService {
     this._hubConnection.on('MessageReceived', (data: any) => {
       console.log('Data received........');
       this.messageReceived.emit(data);
+    });
+  }
+
+  public StopConnection(): void {
+    this._hubConnection.stop().then(() => {
+      this.connectionIsEstablished = false;
+      console.log('Hub connection Stoped');
+      this.connectionEstablished.emit(false);
+    })
+    .catch(err => {
+      console.log('Error while establishing disconnection, retrying...');
     });
   }
 }

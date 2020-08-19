@@ -1,35 +1,26 @@
+
 <div class="container-fluid">&nbsp;</div>
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <div class="form-inline">
+      <div class="form-group">
         <label>Tags</label>
-        <app-auto-complete-mutli-select [(ngModel)]="MultiSelectstring" style="width: 100%;">
+        <app-auto-complete-mutli-select (ResultData)="GetOutput($event)" style="width: 100%;">
         </app-auto-complete-mutli-select>
-
-        <label>Tags</label>
-        <select class="form-control" [(ngModel)]="Filters.Type" name="tags" #tags="ngModel" required>
-          <option selected>Select</option>
-          <option *ngFor="let Tag of Types" value="{{Tag.TValue}}">
+      </div>
+      <div class="form-group">
+        <label>Type</label>
+        <select class="form-control" [(ngModel)]="Filters.Type" name="tags" style="width: 50%;" #tags="ngModel" required>
+          <option *ngFor="let Tag of Types" value="{{Tag.TValue}}" selected>
             {{Tag.TText}}
           </option>
         </select>
-        <button mdbBtn type="button" color="primary" (click)="SearchFilter()" mdbWavesEffect>Submit</button>
       </div>
       <div class="form-group">
-        <label>Test</label>
-        <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search..." />
-        <datalist id="datalistOptions">
-          <option class="spinner-border" role="status">
-            <span class="sr-only">Loading...</span>
-          </option>
-          <option value="San Francisco"> </option>
-          <option value="New York"> </option>
-          <option value="Seattle"> </option>
-          <option value="Los Angeles"> </option>
-          <option value="Chicago"> </option>
-        </datalist>
+        <label>Search</label>
+        <input type="text"  name="Search" class="form-control" placeholder="Search...">
       </div>
+      <button mdbBtn type="button" color="primary" (click)="SearchFilter()" mdbWavesEffect>Submit</button>
     </div>
   </div>
 </div>

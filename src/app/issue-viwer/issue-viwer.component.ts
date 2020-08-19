@@ -5,6 +5,8 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Questions } from '../Shared/Models/common-model';
 import { Router } from '@angular/router';
+import { HttpEventType } from '@angular/common/http';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-issue-viwer',
@@ -15,6 +17,7 @@ export class IssueViwerComponent implements OnInit {
   Qst: Questions = new Questions();
   Tags: any[];
   SelecTags: any[] = [];
+  LoadingText: string;
   editorConfig: AngularEditorConfig = {
     editable: true,
       spellcheck: true,
@@ -74,7 +77,7 @@ export class IssueViwerComponent implements OnInit {
     ]
 };
   constructor(private Ser: BloggerService, private router: Router, private Zone: NgZone,
-              private Autocomplete: AutoCompleteMutliSelectComponent) {
+              private Autocomplete: AutoCompleteMutliSelectComponent, private spinner: NgxSpinnerService) {
     this.GetTags();
   }
 
@@ -88,8 +91,16 @@ export class IssueViwerComponent implements OnInit {
 
   SubmitQst() {
     this.Qst.Tags = this.Qst.TagsAr.toString();
-    this.Ser.SubmitQst(this.Qst).subscribe((x: any[]) => {
-      this.router.navigateByUrl('/Home');
+    this.spinner.show();
+    this.LoadingText = 'Posting';
+    this.Ser.SubmitQst(this.Qst).subscribe(event => {
+      if (event.type === HttpEventType.UploadProgress) {
+        const progress = Math.round(100 * event.loaded / event.total);
+        this.LoadingText = 'Completed';
+      } else if (event.type === HttpEventType.Response) {
+        this.spinner.hide();
+        this.router.navigateByUrl('/Home');
+      }
     });
   }
   GetOutput(optins: any[]) {

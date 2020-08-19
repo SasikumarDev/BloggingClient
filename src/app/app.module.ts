@@ -2,8 +2,8 @@ import { AutoCompleteMutliSelectComponent } from './Shared/Components/auto-compl
 import { BloggerService } from './Shared/blogger.service';
 import { BloggingGuardGuard } from './Shared/Guard/blogging-guard.guard';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
@@ -19,6 +19,7 @@ import { RegisterComponent } from './register/register.component';
 import { ViewPartIssueComponent } from './view-part-issue/view-part-issue.component';
 import { RegisterEmailValidatorDirective } from './Shared/Validators/register-email-validator.directive';
 import { FilterQuestionsComponent } from './filter-questions/filter-questions.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { FilterQuestionsComponent } from './filter-questions/filter-questions.co
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     MDBBootstrapModule.forRoot(),
     FormsModule,
@@ -51,9 +53,11 @@ import { FilterQuestionsComponent } from './filter-questions/filter-questions.co
       { path: 'Register', component: RegisterComponent },
       { path: 'ViewAll', component: FilterQuestionsComponent },
       { path: '**', component: HomeComponent }
-    ])
+    ]),
+    NgxSpinnerModule
   ],
   providers: [BloggingGuardGuard, BloggerService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
